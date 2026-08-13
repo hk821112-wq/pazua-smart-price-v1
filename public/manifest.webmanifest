@@ -1,0 +1,12 @@
+{
+  "name": "商品智慧查價",
+  "short_name": "智慧查價",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f3f4f6",
+  "theme_color": "#111318",
+  "lang": "zh-Hant",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "pazua-smart-price",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "crawl": "node scripts/crawl.mjs --out",
+    "dev": "wrangler pages dev public --ai AI",
+    "deploy": "wrangler pages deploy public"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

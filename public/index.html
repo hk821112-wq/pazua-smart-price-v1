@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#111318" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>商品智慧查價</title>
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">PA!ZUA INVENTORY TOOL</div>
+        <h1>商品智慧查價</h1>
+      </div>
+      <div class="status-dot" id="systemStatus" title="系統狀態"><span></span></div>
+    </header>
+
+    <main>
+      <section class="hero-card">
+        <div class="hero-copy">
+          <p class="hero-kicker">進貨不用翻貨單</p>
+          <h2>拿起商品，<br><strong>拍一下就查價。</strong></h2>
+          <p>系統會讀取品牌、型號、包裝文字，再從商品資料庫找出最接近的品項。</p>
+        </div>
+        <button class="camera-button" id="cameraButton" type="button">
+          <span class="camera-icon" aria-hidden="true">⌁</span>
+          <span>拍照搜尋</span>
+          <small>開啟相機</small>
+        </button>
+        <input id="cameraInput" type="file" accept="image/*" capture="environment" hidden />
+        <input id="galleryInput" type="file" accept="image/*" hidden />
+        <button class="gallery-button" id="galleryButton" type="button">從相簿選擇</button>
+      </section>
+
+      <section class="stats-row" aria-label="資料庫狀態">
+        <div class="stat">
+          <span>商品資料</span>
+          <strong id="productCount">--</strong>
+          <small>筆</small>
+        </div>
+        <div class="stat stat-wide">
+          <span>最後同步</span>
+          <strong id="lastSync">尚未同步</strong>
+        </div>
+      </section>
+
+      <section class="manual-search">
+        <label for="searchInput">也可以直接輸入型號 / 品名</label>
+        <div class="search-box">
+          <input id="searchInput" type="search" autocomplete="off" placeholder="例如：CB-GHP-A-set1、岩谷、聲寶烤盤" />
+          <button id="searchButton" type="button" aria-label="搜尋">搜尋</button>
+        </div>
+      </section>
+
+      <section id="scanPanel" class="scan-panel hidden" aria-live="polite">
+        <div class="preview-wrap">
+          <img id="previewImage" alt="待辨識商品照片" />
+          <div class="scan-line"></div>
+        </div>
+        <div class="scan-copy">
+          <strong id="scanTitle">正在辨識商品…</strong>
+          <span id="scanDetail">讀取品牌、型號與包裝文字</span>
+        </div>
+      </section>
+
+      <section id="analysisPanel" class="analysis-panel hidden">
+        <div class="section-title-row">
+          <h3>辨識到的資訊</h3>
+          <button id="editQueryButton" class="text-button" type="button">用文字修正</button>
+        </div>
+        <div id="analysisChips" class="chips"></div>
+      </section>
+
+      <section id="resultsSection" class="results-section hidden">
+        <div class="section-title-row">
+          <div>
+            <span class="mini-label">MATCH RESULTS</span>
+            <h3 id="resultsTitle">搜尋結果</h3>
+          </div>
+          <span id="resultCount" class="result-count"></span>
+        </div>
+        <div id="resultsList" class="results-list"></div>
+      </section>
+
+      <section id="emptyState" class="empty-state">
+        <div class="empty-icon">◎</div>
+        <strong>準備好了</strong>
+        <p>拍商品本體或外盒都可以。<br>若能拍到品牌與型號，辨識會最準。</p>
+      </section>
+    </main>
+  </div>
+
+  <div class="bottom-action hidden" id="bottomAction">
+    <button id="nextItemButton" type="button">拍下一件商品</button>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="/app.js" type="module"></script>
+</body>
+</html>
