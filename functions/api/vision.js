@@ -23,6 +23,10 @@ function extractTextResponse(response) {
   if (typeof response.result === 'string') return response.result;
   if (typeof response.output_text === 'string') return response.output_text;
 
+  if (response.result && typeof response.result.answer === 'string') {
+    return response.result.answer;
+  }
+
   if (response.result && typeof response.result.response === 'string') {
     return response.result.response;
   }
