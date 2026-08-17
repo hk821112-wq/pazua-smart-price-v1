@@ -74,6 +74,12 @@ export function scoreProduct(product, query, hints = {}) {
   const hintModel = normalizeText(hints.model || '');
   const hintSku = normalizeText(hints.sku || '');
   const hintBrand = normalizeText(hints.brand || '');
+  const colorNeutralModels = [...new Set(
+    [query, hints.model, hints.sku]
+      .filter(Boolean)
+      .flatMap(value => modelSearchVariants(value).slice(1))
+      .map(normalizeText)
+  )];
 
   let score = 0;
   const reasons = [];
@@ -106,6 +112,18 @@ export function scoreProduct(product, query, hints = {}) {
   if (q && sku && (sku.includes(q) || q.includes(sku))) {
     score += 70;
     reasons.push('SKU 文字相符');
+  }
+  if (colorNeutralModels.some(candidate =>
+    candidate && (
+      model === candidate ||
+      sku === candidate ||
+      title.includes(candidate) ||
+      search.includes(candidate) ||
+      compactText(search).includes(compactText(candidate))
+    )
+  )) {
+    score += 88;
+    reasons.push('忽略顏色碼後型號相符');
   }
 
   const tokens = q.split(' ').filter(t => t.length >= 2);
