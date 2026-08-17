@@ -24,8 +24,8 @@ test('searches both the scanned SKU and its color-neutral model', async () => {
               id: 'product-1',
               title: 'Kinyo AC迷你萬用充',
               brand: 'Kinyo',
-              model: 'KPB-2652',
-              sku: 'KPB-2652',
+              model: 'copy_to_clipboard',
+              sku: null,
               price: 0,
               compare_at_price: 730,
               currency: 'TWD',
@@ -50,5 +50,6 @@ test('searches both the scanned SKU and its color-neutral model', async () => {
 
   assert.ok(capturedBinds.includes('%kpb-2652br%'));
   assert.ok(capturedBinds.includes('%kpb-2652%'));
-  assert.equal(results[0]?.sku, 'KPB-2652');
+  assert.equal(results[0]?.title, 'Kinyo AC迷你萬用充');
+  assert.ok(results[0]?.reasons.includes('忽略顏色碼後型號相符'));
 });
