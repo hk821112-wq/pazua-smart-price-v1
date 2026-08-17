@@ -32,6 +32,20 @@ export function cleanModel(value = '') {
     .slice(0, 120);
 }
 
+export function modelSearchVariants(value = '') {
+  const original = cleanModel(value);
+  if (!original) return [];
+
+  const variants = [original];
+  const colorSuffix = original.match(/^(.+?\d)([a-z]{1,4})$/i);
+
+  if (colorSuffix && /[a-z]/i.test(colorSuffix[1])) {
+    variants.push(colorSuffix[1]);
+  }
+
+  return [...new Set(variants)];
+}
+
 export function buildSearchText(product) {
   const parts = [
     product.title,
@@ -109,8 +123,13 @@ export function scoreProduct(product, query, hints = {}) {
 
 export async function searchProducts(db, query, hints = {}, limit = 12) {
   const q = normalizeText(query);
-  const hinted = [hints.model, hints.sku, hints.brand].filter(Boolean).map(normalizeText);
-  const tokens = [...new Set([...q.split(' '), ...hinted])]
+  const queryTokens = String(query || '').split(/\s+/).filter(Boolean);
+  const hinted = [hints.model, hints.sku, hints.brand].filter(Boolean);
+  const tokens = [...new Set(
+    [...queryTokens, ...hinted]
+      .flatMap(modelSearchVariants)
+      .map(normalizeText)
+  )]
     .filter(t => t && t.length >= 2)
     .slice(0, 8);
 

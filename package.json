@@ -6,7 +6,8 @@
   "scripts": {
     "crawl": "node scripts/crawl.mjs --out",
     "dev": "wrangler pages dev public --ai AI",
-    "deploy": "wrangler pages deploy public"
+    "deploy": "wrangler pages deploy public",
+    "test": "node --test"
   },
   "devDependencies": {
     "wrangler": "^4.0.0"
